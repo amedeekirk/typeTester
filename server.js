@@ -1,5 +1,5 @@
 const express = require('express');
-//const mysql = require('mysql');
+const mysql = require('mysql');
 const path = require('path');
 const app = express();
 
@@ -14,7 +14,7 @@ Things to implement if time allows
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-/*
+
 //set up database connection
 const connection = mysql.createConnection({
     host: 'typetester-db.mysql.database.azure.com',
@@ -26,7 +26,7 @@ connection.connect((err) => {
     if (err) throw err;
     console.log('Connected!');
 });
-*/
+
 
 /*
 const server = http.createServer(function(request, response) {
