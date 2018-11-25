@@ -1,5 +1,5 @@
 const express = require('express');
-const mysql = require('mysql');
+//const mysql = require('mysql');
 const path = require('path');
 const app = express();
 const port = 3000;
@@ -11,7 +11,7 @@ Things to implement if time allows
 - produce a CI/CD build and release in VSTS
  */
 
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
 
 /*
 //set up database connection
@@ -26,6 +26,8 @@ connection.connect((err) => {
     console.log('Connected!');
 });
 */
+
+app.get('/', (req, res) => res.send('Hello World!'));
 
 app.listen(port, (err) => {
     if (err) {return console.log('something bad happened', err)}
