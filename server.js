@@ -1,9 +1,9 @@
-//const express = require('express');
+const express = require('express');
 //const mysql = require('mysql');
-//const path = require('path');
-//const app = express();
+const path = require('path');
+const app = express();
 
-var http = require('http');
+//var http = require('http');
 
 /*
 Things to implement if time allows
@@ -28,15 +28,21 @@ connection.connect((err) => {
 });
 */
 
+/*
 const server = http.createServer(function(request, response) {
 
     response.writeHead(200, {"Content-Type": "text/plain"});
     response.end("Hello World!");
 
 });
+*/
+
+
+app.get('/', (req, res) => res.send('Hello World!'));
+
 const port = process.env.PORT || 1337;
 
-server.listen(port);
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 console.log("Server running at http://localhost:%d", port);
 
