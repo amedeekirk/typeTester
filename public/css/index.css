@@ -1,0 +1,192 @@
+body {
+    font-family: 'Helvetica', sans-serif;
+    font-weight: bold;
+    margin: 0;
+}
+/*============== Navbar items ==============*/
+/*                                          */
+/*==========================================*/
+ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    overflow: hidden;
+    background: #333333;
+}
+
+navbar-list>ul{
+    float: right;
+}
+
+.navbar-item{
+    font-size: 28px;
+    float: left;
+}
+
+.navbar-right{
+    float: right;
+}
+.navbar-item a{
+    display: block;
+    color: #FFFFFF;
+    text-decoration: none;
+    text-align: center;
+    padding: 14px 16px;
+}
+
+.navbar-right a:hover {
+    background-color: #888888;
+}
+
+.header{
+    color: #FFFFFF;
+    padding: 10px 16px;
+}
+
+/*=============== Main items ===============*/
+/*                                          */
+/*==========================================*/
+
+html {
+    background-color: #EEEEEE;
+    min-height: 100%;
+    min-width: 675px;
+    position: relative;
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 20px 100px 20px;
+    min-height: 560px;
+}
+
+#wrapper{
+    font-weight: normal;
+    width: 100%;
+}
+
+#word-bank {
+    text-align: center;
+    vertical-align: middle;
+    margin: 80px auto 10px auto;
+    border: 3px solid #333333;
+    background-color: #FEFEFE;
+    box-shadow: 0 0 30px #CCCCCC;
+    border-radius: 5px;
+    height: 100px;
+    width: 80%;
+}
+
+#word-bank  span {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    font-size: 30px;
+}
+
+#timer{
+    margin-left: 27.5%;
+}
+
+input {
+    height: 30px;
+    width: 40%;
+    font-size: 24px;
+    border: 2px solid #333333;
+    background-color: #FEFEFE;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px #CCCCCC;
+}
+
+button{
+    background-color: #333333;
+    border: 2px solid #333333;
+    border-radius: 5px;
+    color: #EEEEEE;
+    padding: 2px 5px 2px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/*============== Footer items ==============*/
+/*                                          */
+/*==========================================*/
+
+footer {
+    background-color: #333333;
+    color: #EEEEEE;
+    width: 100%;
+    bottom: 0px;
+    position: absolute;
+}
+
+.footerText {
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+    padding-right: 25px;
+    font-weight: 200;
+}
+
+/*=============== 404 items ================*/
+/*                                          */
+/*==========================================*/
+
+.error-container {
+    flex: 1 100%;
+    text-align: center;
+}
+
+.error-container h2,
+.error-container h3 {
+    margin: 0;
+    font-weight: lighter;
+}
+
+.error-container h2 {
+    font-size: 96px;
+}
+
+.error-container h3 {
+    font-size: 32px;
+}
+
+/*=========== Leaderboard items ============*/
+/*                                          */
+/*==========================================*/
+
+.leaderboard-layout {
+    padding-top: 10px;
+    padding-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.leaderboard-layout h2{
+    font-size: 64px;
+}
+
+.leaderboard-table{
+    display: table;
+}
+
+table{
+    background-color: #fff;
+    border-collapse: collapse;
+    text-align: center;
+    width: 150%;
+}
+
+th {
+    border-bottom: 8px solid #ddd;
+    height: 50px;
+    font-size: 32px;
+}
+tr {
+    border-bottom: 1px solid #ddd;
+    font-size: 24px;
+}

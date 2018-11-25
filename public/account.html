@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <link rel="stylesheet" href="profile.css" type="text/css" href="favicon.ico" >
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body id=background >
+
+<header class= "header_fixed">
+    <div id= headerBack>
+        <img id=logo src= "https://s9.postimg.org/au0c1zrr3/oie_Q3_CNotmv_Atf_T.png" />
+        <div id = menuWrap class="dropdown">
+            <button id = menu class="dropbtn">
+                <span class="panel-toggler__line"></span>
+                <span class="panel-toggler__line"></span>
+                <span class="panel-toggler__line"></span>
+            </button>
+            <div class="dropdown-content">
+                <form action ="/homePage" method="get">
+                    <input type="submit" value= "Home Page" name="homePage" id="homePage">
+                </form>
+                <form action ="/settings" method="get">
+                    <input type="submit" value= "Settings" name="Login/Create" id="LoginCreate">
+                </form>
+                <form action ="/faq" method="get">
+                    <input type="submit" value= "FAQ" name="Login/Create" id="LoginCreate">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <div id= formWrapper>
+
+            <div id= imageWrap>
+                <button id=submitImage> Add Image </button>
+            </div>
+
+            <div id=infoWrap>
+                <form action="/Profile" method="post">
+                    <fieldset class= "field">
+                        <fieldset class= "field">
+                            <legend class= "personInfo" style="font-size:2.5em;" > Hello {{name}}: </legend>
+
+                        </fieldset>
+
+
+                        <fieldset class= "field">
+
+
+
+                            <label class= "personInfo">State:  {{state}}  </label>
+                            <br>
+                            <select class="stateSelect" value ="{{state}}" name="state">
+                                <option value="AL">AL</option>
+                                <option value="AK">AK</option>
+                                <option value="AR">AR</option>
+                                <option value="AZ">AZ</option>
+                                <option value="CA">CA</option>
+                                <option value="CO">CO</option>
+                                <option value="CT">CT</option>
+                                <option value="DC">DC</option>
+                                <option value="DE">DE</option>
+                                <option value="FL">FL</option>
+                                <option value="GA">GA</option>
+                                <option value="HI">HI</option>
+                                <option value="IA">IA</option>
+                                <option value="ID">ID</option>
+                                <option value="IL">IL</option>
+                                <option value="IN">IN</option>
+                                <option value="KS">KS</option>
+                                <option value="KY">KY</option>
+                                <option value="LA">LA</option>
+                                <option value="MA">MA</option>
+                                <option value="MD">MD</option>
+                                <option value="ME">ME</option>
+                                <option value="MI">MI</option>
+                                <option value="MN">MN</option>
+                                <option value="MO">MO</option>
+                                <option value="MS">MS</option>
+                                <option value="MT">MT</option>
+                                <option value="NC">NC</option>
+                                <option value="NE">NE</option>
+                                <option value="NH">NH</option>
+                                <option value="NJ">NJ</option>
+                                <option value="NM">NM</option>
+                                <option value="NV">NV</option>
+                                <option value="NY">NY</option>
+                                <option value="ND">ND</option>
+                                <option value="OH">OH</option>
+                                <option value="OK">OK</option>
+                                <option value="OR">OR</option>
+                                <option value="PA">PA</option>
+                                <option value="RI">RI</option>
+                                <option value="SC">SC</option>
+                                <option value="SD">SD</option>
+                                <option value="TN">TN</option>
+                                <option value="TX">TX</option>
+                                <option value="UT">UT</option>
+                                <option value="VT">VT</option>
+                                <option value="VA">VA</option>
+                                <option value="WA">WA</option>
+                                <option value="WI">WI</option>
+                                <option value="WV">WV</option>
+                                <option value="WY">WY</option>
+                            </select>
+                            <br>
+                            <br>
+                            <label class= "personInfo">City:    </label>
+                            <br>
+                            <input type="text" name="city" size="30" class= "personInput" value ="{{city}}">
+                            <br>
+                            <!-- CONNECT TO MAPS API FOR AUTOCOMPLETE -->
+
+                            <!--------------------->
+
+                            <!--------------------->
+                            <br>
+                            <label class= "personInfo">Interests: </label>
+                            <br>
+                            <input type="text" name="interests" size="30" class= "personInput" value ="{{interests}}">
+                            <br>
+                            <br>
+                            <label class= "personInfo">Biography: </label>
+                            <br>
+                            <input type= "text" rows="4" cols="50"  value ="{{biography}}" name="biography" size="500"  class= "personInput" style="height:4em;">
+                            <br>
+                        </fieldset>
+                        <fieldset class= "field">
+                            <label>
+                                <input type="submit" class="savebutton" value="Save Changes" name ="saveButton">
+                            </label>
+                        </fieldset>
+                    </fieldset>
+                </form>
+
+                <form  class= "bot" action="/homePage" method="post">
+                    <input class = "logDel" id="logout" value ="Logout" type="submit" name="Logout">
+
+                </form>
+
+                <form class= "bot"  action="/homePage" method="post">
+                    <input class = "logDel" id="Delete" value ="Delete" type="submit" name="Delete">
+
+                </form>
+            </div>
+        </div>
+        </fieldset>
+        <div class="bottombuttons">
+            <label>
+                <form class="profileButton"  action="/search" method="get">
+                    <button type="submit" id="searchButton" name="performSearch" class="getcon"><i class="material-icons">grain</i><br>Get Connected</button>
+                </form>
+            </label>
+            <label>
+                <form class="profileButton" action="/prevConnections" method="get">
+                    <button type="submit" name="preConnections" class="getlist"><i class="material-icons">people</i><br>View Friends</button>
+                </form>
+            </label>
+        </div>
+    </section>
+    <div id="loading"></div>
+</body>
+</html>

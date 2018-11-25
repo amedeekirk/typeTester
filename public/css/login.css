@@ -1,0 +1,95 @@
+#section1 {
+    width: 100%;
+    height: 50em;
+    /*border-radius: 25px;*/
+    background: #fff9a3;
+}
+
+#body1{
+    background: #CCCCCC;
+}
+
+.personInput{
+    border-radius: .5em;
+    border:none;
+    width: 70%;
+    height: 1.5em;
+    font-size:1em;
+    font-family: "Futura", Arial, serif;
+}
+
+.personPass{
+    padding-right:.2em;
+    font-size:1em;
+    font-family: "Futura", Arial, serif;
+}
+
+.field{
+    border: none;
+}
+
+.box{
+    margin:0 auto;
+    width:40em;
+    padding-top:10em;
+    color:#4f4f4f;
+    font-family: "Futura", Arial, serif;
+}
+
+.mid{
+    padding-top:.2em;
+}
+.mid1{
+    padding-top:.2em;
+}
+
+.LoginButton{
+    position:relative;
+    background-color:white;
+    border-radius:1em;
+    font-size:1em;
+    color:#4f4f4f;
+    border:none;
+
+}
+
+.createButton{
+    bottom: .2em;
+    position:relative;
+    background-color:white;
+    border-radius:1em;
+    font-size:1em;
+    color:#4f4f4f;
+    border:none;
+}
+
+.createButton:hover{
+
+    background-color:#bac3c9;
+}
+
+
+.LoginButton:hover{
+    background-color:#bac3c9;
+}
+
+.ForgetPass{
+    background-color: Transparent;
+    border:none;
+    color:#4f4f4f;
+    font-size:1em;
+    margin-left:-.5em;
+}
+.ForgetPass:hover{
+    color: #a3d5ff;
+}
+
+.button1{
+    display:inline-block;
+}
+
+.bottomButton{
+    position:relative;
+    text-align: center;
+    margin-top:40%;
+}
