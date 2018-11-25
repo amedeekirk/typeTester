@@ -12,7 +12,7 @@ Things to implement if time allows
 - produce a CI/CD build and release in VSTS
  */
 
-//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 /*
 //set up database connection
@@ -38,7 +38,9 @@ const server = http.createServer(function(request, response) {
 */
 
 
-app.get('/', (req, res) => res.send('Hello World!'));
+app.get('/', (req, res) =>
+    res.sendFile(path.join(__dirname + '/index.html'))
+);
 
 const port = process.env.PORT || 1337;
 
