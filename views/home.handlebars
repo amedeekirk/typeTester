@@ -2,7 +2,16 @@
 <main>
     <div id="wrapper">
         <div id="word-bank">
-            <span  v-for="item in wordlist" v-bind:id="item.ID">{{item.word}}</span>
+            <span id="0"></span>
+            <span id="1"></span>
+            <span id="2"></span>
+            <span id="3"></span>
+            <span id="4"></span>
+            <span id="5"></span>
+            <span id="6"></span>
+            <span id="7"></span>
+            <span id="8"></span>
+            <span id="9"></span>
         </div>
         <span><button id="timer" alt="Click to hide">{{counter}}</button></span>
         <input type="text" id="input" spellcheck="off" v-model="input" @keydown ="timerstart" @keyup.space="update" :disabled="finished == 1">
