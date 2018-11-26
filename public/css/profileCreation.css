@@ -1,0 +1,101 @@
+
+
+#error{
+    font-family: "Futura", Arial, serif;
+    left: .5em;
+}
+
+.header_fixed{
+    position: relative;
+    z-index: 110;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+
+#background{
+    background-color: #CCCCCC;;
+}
+
+#formWrapper{
+    background-color: #333333;
+    border-radius: 2em;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    height: 95%;
+    top: 1em;
+}
+
+#submitImage{
+    position:relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+    width: 100%;
+    border-radius: 2em;
+    font-size: 1em;
+    font-family: "Futura", Arial, serif;
+}
+
+#submitImage:hover{
+    background-color: #bac3c9;
+}
+
+#imageWrap{
+    background-color: white;
+    border-radius: 2em;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15em;
+    height: 15em;
+    top: 1em;
+}
+
+#infoWrap{
+    padding-top: 1em;
+    position: relative;
+}
+
+.field{
+    border: none;
+}
+
+.personInfo{
+
+    font-size: 1.5em;
+    font-family: "Futura", Arial, serif;
+    color: white;
+}
+
+.personInput{
+    border-radius: .5em;
+    width: 70%;
+    height: 1.5em;
+
+}
+
+#title{
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#submitButton{
+    position:relative;
+    background-color:white;
+    border-radius:1em;
+    font-size:1em;
+    color:#4f4f4f;
+    border:none;
+}
+
+#submitButton:hover{
+    background-color:#bac3c9;
+}

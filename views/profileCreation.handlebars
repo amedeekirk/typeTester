@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <link rel="stylesheet" href="css/profileCreation.css" type="text/css" >
+</head>
+<body id=background >
+
+<header class= "header_fixed">
+    <section>
+        <div id= formWrapper>
+
+            <div id= imageWrap>
+                <button id=submitImage> Add Image </button>
+            </div>
+
+            <div id=infoWrap>
+                <form action ='/profile' method="post">
+                    <fieldset class= "field">
+                        <fieldset class= "field">
+                            <legend class= "personInfo" style="font-size:2.5em;" > Personal Info: </legend>
+                            <label class= "personInfo">Username:  </label>
+                            <br>
+                            <input type="text"  id="usernameIn" name="username" size="30" maxlength ="30" class= "personInput">
+                            <br>
+                            <label class= "personInfo">Password:    </label>
+                            <br>
+                            <input type="password" id="userPassword"  name="passWord" size="30" maxlength ="30" class= "personInput">
+                            <br>
+                            <label class= "personInfo">Re-Enter Password:    </label>
+                            <br>
+                            <input type="password" id="userRePassword" name="userRePassword" size="30" maxlength="30" class= "personInput">
+                            <p id = error style="color:red;"> {{error}}  </p>
+                            <br>
+                        </fieldset>
+                        <br>
+
+                        <fieldset class= "field">
+                            <label>
+                                <input id=submitButton type="submit" value="Submit">
+                            </label>
+                        </fieldset>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </section>
+    </header>
+
+
+</body>
+</html>

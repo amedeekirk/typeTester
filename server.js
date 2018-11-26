@@ -50,6 +50,18 @@ app.get('/', function (req, res) {
     res.render('home');
 });
 
+app.get('/login', function (req, res) {
+    res.render('login');
+});
+
+app.get('/profileCreation', function (req, res) {
+    res.render('profileCreation');
+});
+
+
+
+
+
 
 const port = process.env.PORT || 1337;
 
