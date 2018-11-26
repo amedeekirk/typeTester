@@ -46,12 +46,6 @@ connection.query("SELECT * FROM word",
         })
     });
 
-/*
-app.get('/', (req, res) =>
-    res.sendFile(path.join(__dirname + '/index.html'))
-);
-*/
-
 //root
 app.get('/', function (req, res) {
     res.render('home');

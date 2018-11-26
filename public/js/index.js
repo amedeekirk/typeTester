@@ -2,9 +2,17 @@ let input = '';
 let wpm = 0;
 let counter = 60;
 let started, finished = false;
-console.log("hi");
 //This will be the list of 300 words from the server
 let wordlist = [];
+
+//Adds first 10 to wordbank
+function populateWordbank() {
+    for(let i = 0; i < 10; i++) {
+        let currentDiv = document.getElementById(String(i));
+        currentDiv.innerHTML(wordlist[i]);
+    }
+}
+populateWordbank();
 
 //Checks if word is correct and shifts array
 function update() {
@@ -15,10 +23,8 @@ function update() {
     input='';
 
     wordlist.splice(0,1);
-    for(let i = 0; i < 10; i++) {
-        let currentDiv = document.getElementById(String(i));
-        currentDiv.innerHTML(wordlist[i]);
-    }
+    populateWordbank();
+
 }
 
 //Starts and ends timer
