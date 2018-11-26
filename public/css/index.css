@@ -158,12 +158,7 @@ footer {
     font-size: 32px;
 }
 
-/*=========== Leaderboard items ============*/
-/*                                          */
-/*==========================================*/
-
-
-/*============= Account items ==============*/
+/*======= Account/Leaderboard items ========*/
 /*                                          */
 /*==========================================*/
 
@@ -223,4 +218,37 @@ tr:nth-child(odd) {
 
 #userProfile {
     padding-left: 2.25%;
+}
+
+/*============== Login items ===============*/
+/*                                          */
+/*==========================================*/
+
+#loginWrapper {
+    width: 100%;
+    text-align: center;
+}
+
+.loginBtn>a {
+    color: #FFFFFF;
+    text-decoration: none;
+    text-align: center;
+}
+
+.loginInput {
+    background-color: #333333;
+    border: 2px solid #333333;
+    border-radius: 5px;
+    color: #EEEEEE;
+    padding: 2px 5px 2px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    cursor: pointer;
+
+    height: initial;
+    width: initial;
+
+    box-shadow: 0px 0px;
 }
