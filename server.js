@@ -63,6 +63,10 @@ app.get('/profileCreation', function (req, res) {
     res.render('profileCreation');
 });
 
+app.get('/leaderboard', function (req, res) {
+    res.render('leaderboard');
+});
+
 //from profileCreation
 app.post('/profile',function(req, res){
     var context ={};
