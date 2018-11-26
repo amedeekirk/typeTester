@@ -1,6 +1,8 @@
+html,
 body {
     font-family: 'Helvetica', sans-serif;
     font-weight: bold;
+    height: 100%;
     margin: 0;
 }
 /*============== Navbar items ==============*/
@@ -64,6 +66,7 @@ main {
 #wrapper{
     font-weight: normal;
     width: 100%;
+    height: 100%;
 }
 
 #word-bank {
@@ -159,34 +162,65 @@ footer {
 /*                                          */
 /*==========================================*/
 
-.leaderboard-layout {
-    padding-top: 10px;
-    padding-bottom: 30px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+
+/*============= Account items ==============*/
+/*                                          */
+/*==========================================*/
+
+#column1 {
+    float: left;
+    width: 25%;
+    height: 100%;
+    overflow: hidden;
 }
-.leaderboard-layout h2{
-    font-size: 64px;
+#column2 {
+    float: left;
+    width: 74%;
+    min-height: 80vh;
+    border-left: #000000 1px solid;
 }
 
-.leaderboard-table{
-    display: table;
+.columnWrapper {
+    width: 80%;
+    margin: 0 auto;
 }
 
-table{
-    background-color: #fff;
+table {
+    font-family: arial, sans-serif;
     border-collapse: collapse;
-    text-align: center;
-    width: 150%;
+    width: 100%;
 }
 
-th {
-    border-bottom: 8px solid #ddd;
-    height: 50px;
-    font-size: 32px;
+td, th {
+    border: 1px solid #DDDDDD;
+    text-align: left;
+    padding: 8px;
 }
-tr {
-    border-bottom: 1px solid #ddd;
-    font-size: 24px;
+
+tr:nth-child(even) {
+    background-color: #DDDDDD;
+}
+
+tr:nth-child(odd) {
+    background-color: #FFFFFF;
+}
+
+.userStats>li:nth-child(odd),
+.mostMisspelled>li:nth-child(odd),
+.testLogs>li:nth-child(odd){
+    background: #CCCCCC;
+}
+
+.userStats>li:nth-child(even),
+.mostMisspelled>li:nth-child(even),
+.testLogs>li:nth-child(even){
+    background: #DDDDDD;
+}
+
+.rightList {
+    float: right;
+}
+
+#userProfile {
+    padding-left: 2.25%;
 }
