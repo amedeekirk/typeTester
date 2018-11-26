@@ -1,5 +1,6 @@
 const express = require('express');
-var exphbs  = require('express-handlebars');
+const exphbs  = require('express-handlebars');
+const session = require('express-session');
 const mysql = require('mysql');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -16,6 +17,9 @@ app.set('view engine', 'handlebars');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({secret: '<mysecret>',
+    saveUninitialized: true,
+    resave: true}));
 
 
 //set up database connection
