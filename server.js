@@ -1,16 +1,17 @@
 const express = require('express');
+var exphbs  = require('express-handlebars');
 const mysql = require('mysql');
 const path = require('path');
 const app = express();
-
-//var http = require('http');
 
 /*
 Things to implement if time allows
 - configure HTTPS with "Lets Encrypt"
 - containerize application
-- produce a CI/CD build and release in VSTS
  */
+
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -27,20 +28,28 @@ connection.connect((err) => {
     console.log('Connected!');
 });
 
+//sample query
+connection.query("SELECT * FROM word",
+    function (err, res){
+        if(err){
+            console.log(err);
+            return;
+        }
+        res.forEach(function(res) {
+            console.log(res.word_ID, ' ', res.word);
+        })
+    });
 
 /*
-const server = http.createServer(function(request, response) {
-
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end("Hello World!");
-
-});
-*/
-
-
 app.get('/', (req, res) =>
     res.sendFile(path.join(__dirname + '/index.html'))
 );
+*/
+
+app.get('/', function (req, res) {
+    res.render('home');
+});
+
 
 const port = process.env.PORT || 1337;
 
