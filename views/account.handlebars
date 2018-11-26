@@ -1,47 +1,4 @@
 {{> header}}
 main>
-    <h1 id="userProfile">{{username}}'s Profile</h1>
-    <div id="contentBox" style="margin:0px auto; width:100%">
 
-        <div id="column1">
-            <div class="columnWrapper">
-                Stats:
-                <ul class="userStats">
-                    {{#each userStat}}
-                    <li>
-                        <span class="leftList">{{stat}}</span>
-                        <span class="rightList">{{amount}}</span>
-                    </li>
-                    {{/each}}
-                </ul>
-                <br><br>
-                Most misspelled words:
-                <ul class="mostMisspelled">
-                    {{#each mostMisspelled}}
-                    <li>
-                        <span class="leftList">{{word}}</span>
-                        <span class="rightList">{{amount}}</span>
-                    </li>
-                    {{/each}}
-                </ul>
-            </div>
-        </div>
-
-        <div id="column2">
-            <div class="columnWrapper">
-                <table>
-                    <tr>
-                        <th>Test Date</th>
-                        <th>Test Score</th>
-                    </tr>
-                    {{#each testLogs}}
-                    <tr>
-                        <td>{{date}}</td>
-                        <td>{{score}}</td>
-                    </tr>
-                    {{/each}}
-                </table>
-            </div>
-        </div>
-    </div>
 </main>
