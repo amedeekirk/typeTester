@@ -4,6 +4,7 @@ const session = require('express-session');
 const mysql = require('mysql');
 const path = require('path');
 const bodyParser = require('body-parser');
+const datetime = require('node-datetime');
 const app = express();
 
 /*
@@ -88,17 +89,38 @@ app.post('/profile',function(req, res){
             res.render('profileCreation', context);
             return;
         }
-        //send error if login credentials already exist in the database
-       /* else{
-            context.error = "Error thrown, the username already exists";
-            res.render('createProfile', context);
-            return;
-        }*/
+        //query the database for any user tuples with the same username, node-mysql automatically performs escaping
+        else{
+             connection.query("SELECT COUNT(*) AS identicalUser FROM user WHERE username = ?", [req.body.username], function(err, rows){
+                if(err){
+                    console.log(err);
+                    return;
+                }
+                //we have a tuple with the same username
+                if(rows[0].identicalUser == 1){
+                    context.error = "Username already exists!";
+                    res.render('profileCreation', context);
+                    return;
+                }
+                //add tuple to the database and login, make session persistent
+                else{
+                    connection.query("INSERT INTO user (username) VALUES (?)", [req.body.username], function(err){
+                        if(err){
+                            console.log(err);
+                            return;
+                        }
+                        console.log("1 record inserted");
+                    });
+
+                    //TO DO:
+                    //populate an object with the information of the user, multiple queries gathering the results of the user and all of
+                    //the users information then PASS this object as a parameter to the below function
+                    res.render('account');
+                }
+             });
+        }
     }
-
-   // res.render('profile', user);
 });
-
 
 
 const port = process.env.PORT || 1337;
