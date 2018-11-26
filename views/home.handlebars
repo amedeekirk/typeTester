@@ -1,24 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <script src="https://unpkg.com/vue"></script>
-    <link rel="stylesheet" href="css/index.css" media="screen">
-
-    <title>Type Tester</title>
-</head>
-<body>
-<header>
-    <nav>
-        <ul class="navbar-list">
-            <li class="navbar-item header">typeTester</li>
-            <li class="navbar-item navbar-right"><a href="./login">My Account</a></li>
-            <li class="navbar-item navbar-right"><a href="./leaderboard">Leaderboard</a></li>
-            <li class="navbar-item navbar-right"><a href="./index">Home</a></li>
-        </ul>
-    </nav>
-</header>
-
+<link rel="stylesheet" href="css/index.css" media="screen">
+{{> header}}
 <main>
     <div id="wrapper">
         <div id="word-bank">
@@ -29,17 +10,3 @@
         <span><button id ="f5" @click="restart">F5</button></span>
     </div>
 </main>
-
-<footer>
-    <div class="footerText">
-        Created by 12 Inc.
-    </div>
-</footer>
-
-</body>
-
-<script src="js/array.js"></script>
-<script src="js/index.js"></script>
-
-
-</html>

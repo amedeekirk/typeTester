@@ -2,7 +2,7 @@ let input = '';
 let wpm = 0;
 let counter = 60;
 let started, finished = false;
-
+console.log("hi");
 //This will be the list of 300 words from the server
 let wordlist = [];
 
