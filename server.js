@@ -64,12 +64,12 @@ function createLogin(userID){
 }
 
 
-//root
+//home page
 app.get('/', function (req, res) {
     res.render('home');
 });
 
-//from home
+//handle requests from the home page to the login page
 app.get('/login', function (req, res) {
     if(req.session.loggedIn)
             res.render('account', req.session);
@@ -77,42 +77,37 @@ app.get('/login', function (req, res) {
         res.render('login');
 });
 
-//from login
+//handle requests from the login page to the account creation page
 app.get('/profileCreation', function (req, res) {
     res.render('profileCreation');
 });
 
 
-//from profileCreation to account apge
+//This route is triggered when the user enters information into the sign up page
 app.post('/profile',function(req, res){
     var context ={};
 
     if(req.body['passWord']) {
-        //send error if passwords do not match
-        if (req.body.passWord != req.body.userRePassword || req.body.passWord == "") {
+        if (req.body.passWord != req.body.userRePassword || req.body.passWord == "") {    //send error if passwords do not match
             context.error = "you did not enter the same password!";
             res.render('profileCreation', context);
             return;
         }
-        //send error if password is too short
-        if(req.body.passWord.length < 10 ){
+        if(req.body.passWord.length < 10 ) {                                               //send error if password is too short
             context.error = "Passwords must be at least 10 characters long!";
             res.render('profileCreation', context);
         }
-        //query the database for any user tuples with the same username, node-mysql automatically performs escaping
-        else{
+        else{                                                                              //query the database for any user tuples with the same username, node-mysql automatically performs escaping
              connection.query("SELECT COUNT(*) AS identicalUser FROM user WHERE username = ?", [req.body.username], function(err, rows){
                 if(err){
                     console.log(err);
                     return;
                 }
-                //we have a tuple with the same username
-                if(rows[0].identicalUser == 1){
+                if(rows[0].identicalUser == 1) {                                            //entered username already exists in the database
                     context.error = "Username already exists!";
                     res.render('profileCreation', context);
                 }
-                //add tuple to the database and login, make session persistent
-                else{
+                else{                                                                       //add a new user tuple to the database
                     connection.query("INSERT INTO user (username, password) VALUES (?, ?)", [req.body.username,req.body.passWord], function(err){
                         if(err){
                             console.log(err);
@@ -121,9 +116,7 @@ app.post('/profile',function(req, res){
                         console.log("1 record inserted");
                     });
 
-
-
-                    //query for the newly inserted user_ID
+                                                                                            //query for the newly inserted user_ID (set to auto-increment)
                     connection.query("SELECT user_ID FROM user WHERE username = ?", [req.body.username], function(err, rows){
                         if(err){
                             console.log(err);
@@ -133,7 +126,7 @@ app.post('/profile',function(req, res){
                     });
 
 
-                    req.session.loggedIn = true;
+                    req.session.loggedIn = true;                                            //initialize a session object for persistence
                     req.session.username = req.body.username;
 
                     res.render('account', req.session);
@@ -143,36 +136,32 @@ app.post('/profile',function(req, res){
     }
 });
 
-//Make a post from the login page
+//This route is triggered when the user enters their password and username in an attempt to login from the login page
 app.post('/Login',function(req, res) {
     var context = {};
 
-    if(req.body['password'] && req.body['username']){
+    if(req.body['password'] && req.body['username']){                       //query the database to see if a tuple exists with the provided username and password
         connection.query("SELECT * FROM user WHERE username = ? AND password = ?", [req.body.username, req.body['password']], function(err, rows) {
             if (err) {
                 console.log(err);
                 return;
             }
-            //user tuple with credentials exists
-            if(rows.length){
+            if(rows.length){                                                //if a tuple does exist in the database with the proper login info fill out the session object
 
-                //add login tuple
-                createLogin(rows[0].user_ID);
+                createLogin(rows[0].user_ID);                               //add login tuple for security
                 console.log("successful login!");
-
-                //eventually we want to call some populate user object function here!
                 req.session.username = rows[0].username;
 
-                //get the associated results tuple for the user
+                                                                            //get the associated results tuple for the user
                 connection.query("SELECT date_taken, score FROM results WHERE user_ID = ?", [rows[0].user_ID], function(err, result_tuples) {
                     if (err) {
                         console.log(err);
                         return;
                     }
 
-                    req.session.results = result_tuples;
+                    req.session.results = result_tuples;                    //add results tuples to the session
 
-                    //get the Top 5 most misspelled words for the given user
+                                                                            //get the Top 5 most misspelled words for the given user
                     connection.query("SELECT word, count FROM word AS W, top_misspelled AS T WHERE T.user_ID = ? AND W.word_ID = T.word_ID ORDER BY count DESC LIMIT 5", [rows[0].user_ID], function(err, result_tuples) {
                         if (err) {
                             console.log(err);
@@ -180,13 +169,11 @@ app.post('/Login',function(req, res) {
                         }
                         req.session.top_mispelled = result_tuples;
                         req.session.loggedIn = true;
-                        res.render('account', req.session);
+                        res.render('account', req.session);                 //send the user to the account page with the session information
                     });
                 });
             }
-
-            //incorrect information entered during login attempt
-            else{
+            else{                                                           //incorrect information entered during login attempt
                 context.error = "invalid login credentials!";
                 res.render('login', context);
             }
@@ -198,22 +185,22 @@ app.post('/Login',function(req, res) {
     }
 });
 
-//from the home page to the leaderboard
+//this route handles requests to the leaderboard
 app.get('/leaderboard', function (req, res) {
     var board = {};
 
-    //query DB for top 10 results tuples
+                                                                //query DB for top 10 results tuples
     connection.query("SELECT R.score, R.date_taken, U.username FROM results AS R, user AS U WHERE R.user_ID = U.user_ID ORDER BY score DESC LIMIT 10", [], function(err, result) {
         if (err) {
             console.log(err);
             return;
         }
         board.results = result;
-        res.render('leaderboard', board);
+        res.render('leaderboard', board);                       //render the leaderboard
     });
 });
 
-//logout request
+//This route handles logout requests from the profile page
 app.post('/logout', function(req, res){
     req.session.destroy();
     res.render('home');
@@ -222,6 +209,19 @@ app.post('/logout', function(req, res){
 /*
 Query for grabbing 200 random words from the "word" relation
 SELECT * FROM word ORDER BY RAND() LIMIT 200;
+
+I am think that
+
+We need to feed the user words to type out of an array generated with the above SQL query
+Keep track of WPM
+Keep track of time
+After one minute has expired create a new Result Tuple granted that req.session.loggedIn = true
+
+Then:
+design2.pdf
+presentation.pdf
+final-project.zip
+URL.txt
  */
 
 
