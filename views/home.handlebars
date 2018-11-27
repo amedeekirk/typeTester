@@ -13,8 +13,17 @@
             <span id="8"></span>
             <span id="9"></span>
         </div>
-        <span><button id="timer" alt="Click to hide">{{counter}}</button></span>
-        <input type="text" id="input" spellcheck="off" v-model="input" @keydown ="timerstart" @keyup.space="update" :disabled="finished == 1">
+        <span><button id="timer"></button></span>
+        <input type="text" id="input" spellcheck="off">
         <span><button id ="f5" @click="restart">F5</button></span>
     </div>
+    <script>
+            let wordlist = [];
+            {{#each results}}
+                wordlist.push({
+                    word_ID: '{{word_ID}}',
+                    word: '{{word}}'
+                });
+            {{/each}}
+    </script>
 </main>

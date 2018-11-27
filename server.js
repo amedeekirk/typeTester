@@ -66,7 +66,17 @@ function createLogin(userID){
 
 //home page
 app.get('/', function (req, res) {
-    res.render('home');
+    var board = {};
+
+    //query DB for 300 words
+    connection.query("SELECT * FROM word ORDER BY RAND() LIMIT 300;", [], function(err, result) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        board.results = result;
+        res.render('home', board);                       //render the homepage
+    });
 });
 
 //handle requests from the home page to the login page
