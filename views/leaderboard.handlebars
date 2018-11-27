@@ -7,14 +7,13 @@
                 <th>Test Date</th>
                 <th>Test Score</th>
             </tr>
-            {{#each people}}
+            {{#each results}}
                 <tr>
-                    <td>{{user}}</td>
-                    <td>{{date}}</td>
+                    <td>{{username}}</td>
+                    <td>{{date_taken}}</td>
                     <td>{{score}}</td>
                 </tr>
             {{/each}}
         </table>
     </div>
-    <script src="/public/js/leaderboard.js"></script>
 </main>
