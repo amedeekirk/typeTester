@@ -71,7 +71,10 @@ app.get('/', function (req, res) {
 
 //from home
 app.get('/login', function (req, res) {
-    res.render('login');
+    if(req.session.loggedIn)
+            res.render('account', req.session);
+    else
+        res.render('login');
 });
 
 //from login
@@ -129,11 +132,11 @@ app.post('/profile',function(req, res){
                         createLogin(rows[0].user_ID);
                     });
 
-                    var user = {};
-                    user.username = req.body.username;
-                    //TODO: implement persistent logins
 
-                    res.render('account');
+                    req.session.loggedIn = true;
+                    req.session.username = req.body.username;
+
+                    res.render('account', req.session);
                 }
              });
         }
@@ -158,8 +161,7 @@ app.post('/Login',function(req, res) {
                 console.log("successful login!");
 
                 //eventually we want to call some populate user object function here!
-                var user = {};
-                user.username = rows[0].username;
+                req.session.username = rows[0].username;
 
                 //get the associated results tuple for the user
                 connection.query("SELECT date_taken, score FROM results WHERE user_ID = ?", [rows[0].user_ID], function(err, result_tuples) {
@@ -168,7 +170,7 @@ app.post('/Login',function(req, res) {
                         return;
                     }
 
-                    user.results = result_tuples;
+                    req.session.results = result_tuples;
 
                     //get the Top 5 most misspelled words for the given user
                     connection.query("SELECT word, count FROM word AS W, top_misspelled AS T WHERE T.user_ID = ? AND W.word_ID = T.word_ID ORDER BY count DESC LIMIT 5", [rows[0].user_ID], function(err, result_tuples) {
@@ -176,8 +178,9 @@ app.post('/Login',function(req, res) {
                             console.log(err);
                             return;
                         }
-                        user.top_mispelled = result_tuples;
-                        res.render('account', user);
+                        req.session.top_mispelled = result_tuples;
+                        req.session.loggedIn = true;
+                        res.render('account', req.session);
                     });
                 });
             }
@@ -209,6 +212,18 @@ app.get('/leaderboard', function (req, res) {
         res.render('leaderboard', board);
     });
 });
+
+//logout request
+app.post('/logout', function(req, res){
+    req.session.destroy();
+    res.render('home');
+});
+
+/*
+Query for grabbing 200 random words from the "word" relation
+SELECT * FROM word ORDER BY RAND() LIMIT 200;
+ */
+
 
 const port = process.env.PORT || 1337;
 
