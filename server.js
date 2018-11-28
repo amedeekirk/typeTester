@@ -90,18 +90,19 @@ app.post('/', function(req, res){
             console.log("1 result recorded");
         });
 
-        for(let word of req.body.misspelled)
-        connection.query("IF EXISTS(SELECT * FROM top_misspelled WHERE word_ID = (?) AND user_ID = (?)) BEGIN UPDATE top_misspelled SET count = count + 1 WHERE word_ID = (?) AND user_ID = (?) END ELSE INSERT INTO top_misspelled (word_ID, user_ID, count) VALUES (?, ?, ?)",
-            [word, req.body.user_ID, word, req.body.user_ID, word, req.body.user_ID, 1],
+        for(let word of req.body.misspelled){
+            connection.query("IF EXISTS(SELECT * FROM top_misspelled WHERE word_ID = (?) AND user_ID = (?)) BEGIN UPDATE top_misspelled SET count = count + 1 WHERE word_ID = (?) AND user_ID = (?) END ELSE INSERT INTO top_misspelled (word_ID, user_ID, count) VALUES (?, ?, ?)",
+            [word, req.session.user_ID, word, req.session.user_ID, word, req.session.user_ID, 1],
             function(err){
             if(err){
                 console.log(err);
                 return;
             }
             console.log("1 row updated");
-        })
+        })}
     }
 });
+
 
 //handle requests from the home page to the login page
 app.get('/login', function (req, res) {
