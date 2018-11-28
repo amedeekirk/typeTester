@@ -89,34 +89,38 @@ app.post('/', function(req){
         var misspelled = req.body.misspelled.split(",").map(Number);
         console.log(misspelled);
 
-        for(var word of misspelled){
+        misspelled.forEach(function(word){
             console.log(`WORD: ${word}`);
             connection.query("SELECT COUNT(*) AS valid FROM top_misspelled WHERE word_ID = ? AND user_ID = ?", [word, req.session.user_ID], function(err, rows){
-            if(err){
-                console.log(err);
-            }
-            if(rows[0].valid >= 1) {
-                connection.query("UPDATE top_misspelled SET count = count + 1 WHERE word_ID = ? AND user_ID = ?", [word, req.session.user_ID], function (err) {
-                    if(err){
-                        console.log(err);
-                    }
-                    console.log("1 row updated in top_misspelled");
-                });
-            }
-            else{
-                console.log("word " + word + " not recorded for user: " + req.session.user_ID);
+                if(err){
+                    console.log(err);
+                }
+                console.log("THis is valid: " + rows[0].valid);
+                if(rows[0].valid == 1) {
+
+                    console.log("user " + req.session.user_id + " has already encountered word: " + word);
+                    /*
+                    connection.query("UPDATE top_misspelled SET count = count + 1 WHERE word_ID = ? AND user_ID = ?", [word, req.session.user_ID], function (err) {
+                        if(err){
+                            console.log(err);
+                        }
+                        console.log("1 row updated in top_misspelled");
+                    });*/
+                }
+                else{
+                    console.log("word " + word + " not recorded for user: " + req.session.user_ID);
 
 
-            }
-            /*else if(rows[0].valid == 0) {
-                connection.query("INSERT INTO top_misspelled (user_ID, word_ID, count) VALUES (?, ?, ?)", [req.session.user_ID, word, 1], function (err) {
-                    if(err){
-                        console.log(err);
-                    }
-                    console.log("1 row inserted into top_misspelled");
-                });
-            }*/
-        })}
+                }
+                /*else if(rows[0].valid == 0) {
+                    connection.query("INSERT INTO top_misspelled (user_ID, word_ID, count) VALUES (?, ?, ?)", [req.session.user_ID, word, 1], function (err) {
+                        if(err){
+                            console.log(err);
+                        }
+                        console.log("1 row inserted into top_misspelled");
+                    });
+                }*/
+            })})
     }
 });
 
