@@ -1,5 +1,5 @@
 let wpm = 0;
-let counter = 10;
+let counter = 60;
 let started, finished = false;
 let misspelled = [];
 
@@ -77,16 +77,9 @@ function timerEnd() {
 }
 
 //Resets everything as if page was refreshed
-function restart() {
-    clearInterval(timer);
-    inputField.value = '';
-    inputField.disabled = false;
-    wpm = 0;
-    counter = 60;
-    started = false;
-    finished = false;
-    //TODO request new words from DB
-}
+document.getElementById("f5").onclick = function restart() {
+    location.reload()
+};
 
 
 function post(path, params) {

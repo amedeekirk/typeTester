@@ -123,8 +123,27 @@ app.post('/', function(req){
 
 //handle requests from the home page to the login page
 app.get('/login', function (req, res) {
-    if(req.session.loggedIn)
-            res.render('account', req.session);
+    if(req.session.loggedIn) {
+
+        connection.query("SELECT date_taken, score FROM results WHERE user_ID = ?", [req.session.user_ID], function(err, result_tuples) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+
+            req.session.results = result_tuples;                    //add results tuples to the session
+
+            //get the Top 5 most misspelled words for the given user
+            connection.query("SELECT word, count FROM word AS W, top_misspelled AS T WHERE T.user_ID = ? AND W.word_ID = T.word_ID ORDER BY count DESC LIMIT 5", [req.session.user_ID], function(err, result_tuples) {
+                if (err) {
+                    console.log(err);
+                }
+                req.session.top_mispelled = result_tuples;
+                req.session.loggedIn = true;
+                res.render('account', req.session);                  //send the user to the account page with the session information
+            });
+        });
+    }
     else
         res.render('login');
 });
@@ -279,17 +298,6 @@ app.post('/logout', function(req, res){
     req.session.destroy();
     res.render('home');
 });
-
-/*
-After one minute has expired create a new Result Tuple granted that req.session.loggedIn = true
-
-Then:
-design2.pdf
-presentation.pdf
-final-project.zip
-URL.txt
- */
-
 
 var port = process.env.PORT || 1337;
 
