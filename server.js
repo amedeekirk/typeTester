@@ -16,16 +16,13 @@ app.use(session({secret: '<mysecret>',
     saveUninitialized: true,
     resave: true}));
 
+const connection = mysql.createConnection({host: "typetester2-db.mysql.database.azure.com", user: "UserAdmin14@typetester2-db", password: "HelloGoodbye13!", database: "typetest_db", port: 3306});
 
-//set up database connection
-const connection = mysql.createConnection({
-    host: 'typetester-db.mysql.database.azure.com',
-    user: 'AdminUser14@typetester-db',
-    password: 'HelloGoodbye12!',
-    database: 'cs340_final'
-});
 connection.connect((err) => {
-    if (err) throw err;
+    if (err) {
+        console.log("connection failed!");
+        throw err;
+    }
     console.log('Connected!');
 });
 
@@ -99,15 +96,15 @@ app.post('/', function(req){
                 console.log(err);
             }
             if(rows[0].valid >= 1) {
-                connection.query("UPDATE top_misspelled SET count = count + 1 WHERE word_ID = ? AND user_ID = ?)", [word, req.session.user_ID], function (err) {
+                connection.query("UPDATE top_misspelled SET count = count + 1 WHERE word_ID = ? AND user_ID = ?", [word, req.session.user_ID], function (err) {
                     if(err){
                         console.log(err);
                     }
                     console.log("1 row updated in top_misspelled");
                 });
             }
-            else if(rows[0].valid === 0) {
-                connection.query("INSERT INTO top_misspelled (word_ID, user_ID, count) VALUES (?, ?, ?)", [word, req.session.user_ID, 1], function (err) {
+            else if(rows[0].valid == 0) {
+                connection.query("INSERT INTO top_misspelled (user_ID, word_ID, count) VALUES (?, ?, ?)", [req.session.user_ID, word, 1], function (err) {
                     if(err){
                         console.log(err);
                     }
@@ -221,14 +218,34 @@ app.post('/Login',function(req, res) {
                         }
                         req.session.top_mispelled = result_tuples;
                         req.session.loggedIn = true;
-                        res.render('account', req.session);                 //send the user to the account page with the session information
+                        res.render('account', req.session);                  //send the user to the account page with the session information
                     });
                 });
             }
-            else{                                                           //incorrect information entered during login attempt
+            else{                                                            //incorrect information entered during login attempt
                 context.error = "invalid login credentials!";
                 res.render('login', context);
             }
+        });
+    }
+    else if(req.session.loggedIn === true){                                     //if the user is already logged in we simply check if new results have been created
+        connection.query("SELECT date_taken, score FROM results WHERE user_ID = ?", [req.session.user_ID], function(err, result_tuples) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+
+            req.session.results = result_tuples;                                //add results tuples to the session
+                                                                                //get the Top 5 most misspelled words for the given user
+            connection.query("SELECT word, count FROM word AS W, top_misspelled AS T WHERE T.user_ID = ? AND W.word_ID = T.word_ID ORDER BY count DESC LIMIT 5", [req.session.user_ID], function(err, result_tuples) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                req.session.top_mispelled = result_tuples;
+                req.session.loggedIn = true;
+                res.render('account', req.session);                 //send the user to the account page with the session information
+            });
         });
     }
     else{

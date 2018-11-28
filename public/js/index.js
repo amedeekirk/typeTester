@@ -1,5 +1,5 @@
 let wpm = 0;
-let counter = 60;
+let counter = 10;
 let started, finished = false;
 let misspelled = [];
 
