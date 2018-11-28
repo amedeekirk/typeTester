@@ -79,8 +79,7 @@ app.get('/', function (req, res) {
     });
 });
 
-app.post('/', function(req, res){
-    //TODO
+app.post('/', function(req){
     if(req.session.loggedIn === true) {
         connection.query("INSERT INTO results (user_ID, date_taken, score) VALUES (?, ?, ?)", [req.session.user_ID, getDateTime(), req.body.wpm], function(err){
             if(err){
@@ -90,15 +89,31 @@ app.post('/', function(req, res){
             console.log("1 result recorded");
         });
 
-        for(let word of req.body.misspelled){
-            connection.query("IF EXISTS(SELECT * FROM top_misspelled WHERE word_ID = (?) AND user_ID = (?)) BEGIN UPDATE top_misspelled SET count = count + 1 WHERE word_ID = (?) AND user_ID = (?) END ELSE INSERT INTO top_misspelled (word_ID, user_ID, count) VALUES (?, ?, ?)",
-            [word, req.session.user_ID, word, req.session.user_ID, word, req.session.user_ID, 1],
-            function(err){
+        let misspelled = req.body.misspelled.split(",").map(Number);
+        console.log(misspelled);
+
+        for(let word of misspelled){
+            console.log(`WORD: ${word}`);
+            connection.query("SELECT COUNT(*) AS valid FROM top_misspelled WHERE word_ID = ? AND user_ID = ?", [word, req.session.user_ID], function(err, rows){
             if(err){
                 console.log(err);
-                return;
             }
-            console.log("1 row updated");
+            if(rows[0].valid >= 1) {
+                connection.query("UPDATE top_misspelled SET count = count + 1 WHERE word_ID = ? AND user_ID = ?)", [word, req.session.user_ID], function (err) {
+                    if(err){
+                        console.log(err);
+                    }
+                    console.log("1 row updated in top_misspelled");
+                });
+            }
+            else if(rows[0].valid === 0) {
+                connection.query("INSERT INTO top_misspelled (word_ID, user_ID, count) VALUES (?, ?, ?)", [word, req.session.user_ID], 1, function (err) {
+                    if(err){
+                        console.log(err);
+                    }
+                    console.log("1 row inserted into top_misspelled");
+                });
+            }
         })}
     }
 });
@@ -135,7 +150,7 @@ app.post('/profile',function(req, res){
         else{                                                                              //query the database for any user tuples with the same username, node-mysql automatically performs escaping
              connection.query("SELECT COUNT(*) AS identicalUser FROM user WHERE username = ?", [req.body.username], function(err, rows){
                 if(err){
-                    console.log(err);
+                    console.log(`Error line 157: ${err}`);
                     return;
                 }
                 if(rows[0].identicalUser == 1) {                                            //entered username already exists in the database
