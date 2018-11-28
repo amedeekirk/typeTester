@@ -107,7 +107,7 @@ app.post('/', function(req){
                 });
             }
             else if(rows[0].valid === 0) {
-                connection.query("INSERT INTO top_misspelled (word_ID, user_ID, count) VALUES (?, ?, ?)", [word, req.session.user_ID], 1, function (err) {
+                connection.query("INSERT INTO top_misspelled (word_ID, user_ID, count) VALUES (?, ?, ?)", [word, req.session.user_ID, 1], function (err) {
                     if(err){
                         console.log(err);
                     }
