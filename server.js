@@ -103,14 +103,19 @@ app.post('/', function(req){
                     console.log("1 row updated in top_misspelled");
                 });
             }
-            else if(rows[0].valid == 0) {
+            else{
+                console.log("word " + word + " not recorded for user: " + req.session.user_ID);
+
+
+            }
+            /*else if(rows[0].valid == 0) {
                 connection.query("INSERT INTO top_misspelled (user_ID, word_ID, count) VALUES (?, ?, ?)", [req.session.user_ID, word, 1], function (err) {
                     if(err){
                         console.log(err);
                     }
                     console.log("1 row inserted into top_misspelled");
                 });
-            }
+            }*/
         })}
     }
 });
