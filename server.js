@@ -99,27 +99,22 @@ app.post('/', function(req){
                 if(rows[0].valid == 1) {
 
                     console.log("user " + req.session.user_id + " has already encountered word: " + word);
-                    /*
                     connection.query("UPDATE top_misspelled SET count = count + 1 WHERE word_ID = ? AND user_ID = ?", [word, req.session.user_ID], function (err) {
                         if(err){
                             console.log(err);
                         }
                         console.log("1 row updated in top_misspelled");
-                    });*/
+                    });
                 }
-                else{
+                else if(rows[0].valid == 0) {
                     console.log("word " + word + " not recorded for user: " + req.session.user_ID);
-
-
-                }
-                /*else if(rows[0].valid == 0) {
                     connection.query("INSERT INTO top_misspelled (user_ID, word_ID, count) VALUES (?, ?, ?)", [req.session.user_ID, word, 1], function (err) {
                         if(err){
                             console.log(err);
                         }
                         console.log("1 row inserted into top_misspelled");
                     });
-                }*/
+                }
             })})
     }
 });
