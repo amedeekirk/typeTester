@@ -1,10 +1,10 @@
-const express = require('express');
-const exphbs  = require('express-handlebars');
-const session = require('express-session');
-const mysql = require('mysql');
-const path = require('path');
-const bodyParser = require('body-parser');
-const app = express();
+var express = require('express');
+var exphbs  = require('express-handlebars');
+var session = require('express-session');
+var mysql = require('mysql');
+var path = require('path');
+var bodyParser = require('body-parser');
+var app = express();
 
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
@@ -16,7 +16,7 @@ app.use(session({secret: '<mysecret>',
     saveUninitialized: true,
     resave: true}));
 
-const connection = mysql.createConnection({host: "typetester2-db.mysql.database.azure.com", user: "UserAdmin14@typetester2-db", password: "HelloGoodbye13!", database: "typetest_db", port: 3306});
+var connection = mysql.createConnection({host: "typetester2-db.mysql.database.azure.com", user: "UserAdmin14@typetester2-db", password: "HelloGoodbye13!", database: "typetest_db", port: 3306});
 
 connection.connect((err) => {
     if (err) {
@@ -291,7 +291,7 @@ URL.txt
  */
 
 
-const port = process.env.PORT || 1337;
+var port = process.env.PORT || 1337;
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
