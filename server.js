@@ -86,10 +86,10 @@ app.post('/', function(req){
             console.log("1 result recorded");
         });
 
-        let misspelled = req.body.misspelled.split(",").map(Number);
+        var misspelled = req.body.misspelled.split(",").map(Number);
         console.log(misspelled);
 
-        for(let word of misspelled){
+        for(var word of misspelled){
             console.log(`WORD: ${word}`);
             connection.query("SELECT COUNT(*) AS valid FROM top_misspelled WHERE word_ID = ? AND user_ID = ?", [word, req.session.user_ID], function(err, rows){
             if(err){
