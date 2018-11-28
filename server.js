@@ -79,6 +79,30 @@ app.get('/', function (req, res) {
     });
 });
 
+app.post('/', function(req, res){
+    //TODO
+    if(req.session.loggedIn === true) {
+        connection.query("INSERT INTO results (user_ID, date_taken, score) VALUES (?, ?, ?)", [req.session.user_ID, getDateTime(), req.body.wpm], function(err){
+            if(err){
+                console.log(err);
+                return;
+            }
+            console.log("1 result recorded");
+        });
+
+        for(let word of req.body.misspelled)
+        connection.query("IF EXISTS(SELECT * FROM top_misspelled WHERE word_ID = (?) AND user_ID = (?)) BEGIN UPDATE top_misspelled SET count = count + 1 WHERE word_ID = (?) AND user_ID = (?) END ELSE INSERT INTO top_misspelled (word_ID, user_ID, count) VALUES (?, ?, ?)",
+            [word, req.body.user_ID, word, req.body.user_ID, word, req.body.user_ID, 1],
+            function(err){
+            if(err){
+                console.log(err);
+                return;
+            }
+            console.log("1 row updated");
+        })
+    }
+});
+
 //handle requests from the home page to the login page
 app.get('/login', function (req, res) {
     if(req.session.loggedIn)
@@ -133,6 +157,7 @@ app.post('/profile',function(req, res){
                             return;
                         }
                         createLogin(rows[0].user_ID);
+                        req.session.user_ID = rows[0].user_ID;
                     });
 
 
@@ -161,6 +186,7 @@ app.post('/Login',function(req, res) {
                 createLogin(rows[0].user_ID);                               //add login tuple for security
                 console.log("successful login!");
                 req.session.username = rows[0].username;
+                req.session.user_ID = rows[0].user_ID;
 
                                                                             //get the associated results tuple for the user
                 connection.query("SELECT date_taken, score FROM results WHERE user_ID = ?", [rows[0].user_ID], function(err, result_tuples) {
@@ -217,14 +243,6 @@ app.post('/logout', function(req, res){
 });
 
 /*
-Query for grabbing 200 random words from the "word" relation
-SELECT * FROM word ORDER BY RAND() LIMIT 200;
-
-I am think that
-
-We need to feed the user words to type out of an array generated with the above SQL query
-Keep track of WPM
-Keep track of time
 After one minute has expired create a new Result Tuple granted that req.session.loggedIn = true
 
 Then:

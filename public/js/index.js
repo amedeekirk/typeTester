@@ -1,5 +1,5 @@
 let wpm = 0;
-let counter = 60;
+let counter = 10;
 let started, finished = false;
 let misspelled = [];
 
@@ -67,7 +67,12 @@ function timerEnd() {
         currentDiv.innerHTML = '';
     }
 
-    document.getElementById('4').innerHTML = `Time is up! Your WPM is ${wpm}`
+    document.getElementById('4').innerHTML = `Time is up! Your WPM is ${wpm}`;
+    console.log(misspelled);
+    post("/", {
+        misspelled: misspelled,
+        wpm: wpm
+    });
 
 }
 
@@ -81,4 +86,26 @@ function restart() {
     started = false;
     finished = false;
     //TODO request new words from DB
+}
+
+
+function post(path, params) {
+
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+        }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
 }
