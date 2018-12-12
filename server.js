@@ -16,7 +16,7 @@ app.use(session({secret: '<mysecret>',
     saveUninitialized: true,
     resave: true}));
 
-var connection = mysql.createConnection({host: "typetester2-db.mysql.database.azure.com", user: "UserAdmin14@typetester2-db", password: "HelloGoodbye13!", database: "typetest_db", port: 3306});
+var connection = null;
 
 connection.connect((err) => {
     if (err) {
